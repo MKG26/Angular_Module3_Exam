@@ -8,9 +8,10 @@ import { HeaderComponent } from './header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, HeaderComponent, HomeComponent],
+  declarations: [AppComponent, AuthComponent, HeaderComponent, HomeComponent, ProductsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
