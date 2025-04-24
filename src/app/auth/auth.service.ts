@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { User } from './user.modal';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   idToken: string;
@@ -14,7 +15,7 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   user = new BehaviorSubject<User>(null);
 
@@ -79,6 +80,13 @@ export class AuthService {
     if (loadedUser.token) {
       this.user.next(loadedUser);
     }
+  }
+
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth']);
+    localStorage.removeItem('userData');
+    localStorage.removeItem('cart');
   }
 
   handleAuthentication(
