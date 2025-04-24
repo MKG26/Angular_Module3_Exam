@@ -1,7 +1,10 @@
 <div class="container">
 
     <div class="row">
-        <div *ngFor="let cartItem of order; let i = index">
+        <div *ngIf="filteredOrder.length === 0" class="text-center">
+            <h3>You have no orders yet.</h3>
+        </div>
+        <div *ngFor="let cartItem of filteredOrder; let i = index">
             <div class="panel panel-default">
 
                 <div class="panel-heading">
@@ -13,10 +16,10 @@
                 </div>
 
                 <ul class="list-group">
-                    <li class="list-group-item">Rating: {{cartItem.quantity}}</li>
-                    <li class="list-group-item">Price: Rs. {{cartItem.price}}</li>
+                    <li class="list-group-item">Order Date: {{cartItem.date | date:'medium'}}</li>
                     <li class="list-group-item">Quantity: {{cartItem.quantity}}</li>
-
+                    <li class="list-group-item">Price: Rs. {{cartItem.price}}</li>
+                    <li class="list-group-item">Status: {{cartItem.status}}</li>
                 </ul>
 
             </div>

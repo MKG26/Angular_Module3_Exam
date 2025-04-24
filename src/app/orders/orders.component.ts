@@ -13,17 +13,33 @@ export class OrdersComponent implements OnInit {
 
   order: Order[] = [];
 
+  filteredOrder: Order[] = [];
+
   ngOnInit(): void {
     this.orderService.getOrders();
 
+    this.orderService.orderChanged.subscribe((orders) => {
+      this.order = orders;
+
+      this.filterOrderByCurrentUser();
+    });
+
     this.order = this.orderService.orders;
 
-    const user = JSON.parse(localStorage.get('userData'));
+    this.filterOrderByCurrentUser();
+  }
 
-    this.order.filter((order) => {
-      if (user.email === order.user) {
-        return order;
-      }
-    });
+  filterOrderByCurrentUser() {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (userData && userData.email) {
+      this.filteredOrder = this.order.filter((order) => {
+        return order.user === userData.email;
+      });
+
+      console.log('Filtered orders:', this.filteredOrder);
+    } else {
+      this.filteredOrder = [];
+    }
   }
 }
