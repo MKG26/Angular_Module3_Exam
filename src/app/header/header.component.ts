@@ -10,5 +10,11 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  isAuthenticated = false;
+
+  ngOnInit(): void {
+    this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user;
+    });
+  }
 }
