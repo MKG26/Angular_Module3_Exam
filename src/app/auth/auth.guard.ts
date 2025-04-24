@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     return this.authService.user.pipe(
+      take(1),
       map((user) => {
         const isAuth = !!user;
 
