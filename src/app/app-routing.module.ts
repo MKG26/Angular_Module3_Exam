@@ -4,6 +4,7 @@ import { NgModel } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { CartComponent } from './cart/cart.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -11,6 +12,12 @@ const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },

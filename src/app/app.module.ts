@@ -9,9 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, HeaderComponent, HomeComponent, ProductsComponent],
+  declarations: [AppComponent, AuthComponent, HeaderComponent, HomeComponent, ProductsComponent, CartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

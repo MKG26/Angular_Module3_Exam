@@ -18,6 +18,14 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.products = this.productService.products;
+    if (!localStorage.getItem('products')) {
+      this.productService.getProducts();
+    }
+
+    this.productService.productChanged.subscribe((products) => {
+      this.products = products;
+    });
+
+    this.products = this.productService.fetchProducts();
   }
 }
