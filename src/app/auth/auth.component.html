@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form [formGroup]="authenticateForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" placeholder="Email" formControlName="email">
+
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" placeholder="Password" formControlName="password">
+
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="authenticateForm.invalid">{{inSignUpMode ?
+                'SignUp'
+                :'Sign In'}}</button> |
+
+            <button type="button" class="btn btn-primary" (click)="onSwitchMode()">{{!inSignUpMode ? 'Switch to Sign Up'
+                :
+                'Switch to Sign In' }}</button>
+        </form>
+    </div>
+</div>
