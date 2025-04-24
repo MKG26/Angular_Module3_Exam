@@ -8,6 +8,7 @@
             <ul class="nav navbar-nav">
                 <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="/auth">Authenticate</a></li>
                 <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="/home">Home</a></li>
+                <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="/order">Orders</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

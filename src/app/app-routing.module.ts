@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CartComponent } from './cart/cart.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -18,6 +19,12 @@ const appRoutes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order',
+    component: OrdersComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },

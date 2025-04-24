@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../products/product.model';
 import { AuthService } from '../auth/auth.service';
 import { ProductService } from '../products/product.service';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ import { ProductService } from '../products/product.service';
 export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   products: Product[] = [];
@@ -29,13 +31,22 @@ export class HomeComponent implements OnInit {
     });
 
     this.products = this.productService.fetchProducts();
+    this.initializeQuantities();
   }
 
   initializeQuantities() {
     this.productQuantity = new Array(this.products.length).fill(0);
   }
 
-  increaseQuantity(index: number) {}
+  increaseQuantity(index: number) {
+    this.productQuantity[index]++;
+  }
 
-  onAddToCart(index: number, quantity: number) {}
+  decreaseQuantity(index: number) {
+    this.productQuantity[index]--;
+  }
+
+  onAddToCart(index: number) {
+    this.cartService.addItems(index, this.productQuantity[index]);
+  }
 }
