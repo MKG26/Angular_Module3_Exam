@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
 
   products: Product[] = [];
 
+  productQuantity: number[] = [];
+
   ngOnInit(): void {
     if (!localStorage.getItem('products')) {
       this.productService.getProducts();
@@ -28,4 +30,12 @@ export class HomeComponent implements OnInit {
 
     this.products = this.productService.fetchProducts();
   }
+
+  initializeQuantities() {
+    this.productQuantity = new Array(this.products.length).fill(0);
+  }
+
+  increaseQuantity(index: number) {}
+
+  onAddToCart(index: number, quantity: number) {}
 }

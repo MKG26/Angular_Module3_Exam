@@ -12,7 +12,11 @@
                     <div>
                         <span class="mr-10">Rs. {{product.price}}</span>
 
-                        <span>Quantity: {{product.quantity}}</span>
+                        <span>
+                            <button class="btn btn-primary">-</button>
+                            <span>{{quantity}}</span>
+                            <button class="btn btn-primary" (click)="increaseQuantity()">+</button>
+                        </span>
                     </div>
 
                     <div class="text-center">
