@@ -1,6 +1,11 @@
 <div class="container">
 
     <div class="row">
+
+        <div *ngIf="cart.length === 0" class="text-center">
+            <h3>You have no items in your Cart</h3>
+        </div>
+
         <div *ngFor="let cartItem of cart; let i = index">
             <div class="panel panel-default">
 

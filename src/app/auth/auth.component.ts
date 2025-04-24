@@ -20,7 +20,10 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.authenticateForm = new FormGroup({
       email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
   onSwitchMode() {

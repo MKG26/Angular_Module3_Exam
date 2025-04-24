@@ -27,6 +27,10 @@ export class OrderService {
   }
 
   private placeOrder() {
+    this.updateOrders();
+  }
+
+  updateOrders() {
     this.http
       .put(
         'https://module3-test-193b9-default-rtdb.firebaseio.com/orders.json',
@@ -34,6 +38,7 @@ export class OrderService {
       )
       .subscribe(() => {
         console.log('Orders updated on server');
+        this.orderChanged.next([...this.orders]);
       });
   }
 

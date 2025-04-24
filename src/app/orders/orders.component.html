@@ -2,7 +2,7 @@
 
     <div class="row">
         <div *ngIf="filteredOrder.length === 0" class="text-center">
-            <h3>You have no orders yet.</h3>
+            <h3>You have no orders </h3>
         </div>
         <div *ngFor="let cartItem of filteredOrder; let i = index">
             <div class="panel panel-default">
@@ -19,7 +19,29 @@
                     <li class="list-group-item">Order Date: {{cartItem.date | date:'medium'}}</li>
                     <li class="list-group-item">Quantity: {{cartItem.quantity}}</li>
                     <li class="list-group-item">Price: Rs. {{cartItem.price}}</li>
-                    <li class="list-group-item">Status: {{cartItem.status}}</li>
+                    <li class="list-group-item" *ngIf="!isAdmin">Status: {{cartItem.status}}</li>
+                    <li class="list-group-item" *ngIf="isAdmin">
+                        <div>
+                            <button class="btn btn-default" type="button" (click)="toggleDropdown(i)">
+                                {{cartItem.status}}
+                                <span class="caret"></span>
+                            </button>
+                            <div *ngIf="openDropdownIndex === i" class="simple-dropdown">
+                                <button class="dropdown-item" (click)="updateOrderStatus(i, 'Placed')">Placed</button>
+
+                                <button class="dropdown-item"
+                                    (click)="updateOrderStatus(i, 'Processing')">Processing</button>
+
+
+                                <button class="dropdown-item" (click)="updateOrderStatus(i, 'On the way')">On the
+                                    way</button>
+
+
+                                <button class="dropdown-item"
+                                    (click)="updateOrderStatus(i, 'Delivered')">Delivered</button>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
 
             </div>
