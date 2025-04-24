@@ -26,11 +26,22 @@ export class AuthGuard implements CanActivate {
       map((user) => {
         const isAuth = !!user;
 
-        if (isAuth) {
-          return true;
+        if (!isAuth) {
+          return this.router.createUrlTree(['/auth']);
         }
 
-        return this.router.createUrlTree(['/auth']);
+        const isAdmin = user.email === 'admin@gmail.com';
+        const currentPath = route.routeConfig?.path;
+
+        if (isAdmin && currentPath === 'home') {
+          return this.router.createUrlTree(['inventory']);
+        }
+
+        if (!isAdmin && currentPath === 'inventory') {
+          return this.router.createUrlTree(['home']);
+        }
+
+        return true;
       })
     );
   }

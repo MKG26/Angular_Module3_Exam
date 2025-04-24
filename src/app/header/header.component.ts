@@ -12,9 +12,13 @@ export class HeaderComponent implements OnInit {
 
   isAuthenticated = false;
 
+  isAdmin = false;
+
   ngOnInit(): void {
     this.authService.user.subscribe((user) => {
       this.isAuthenticated = !!user;
+
+      this.isAdmin = user?.email === 'admin@gmail.com';
     });
   }
 

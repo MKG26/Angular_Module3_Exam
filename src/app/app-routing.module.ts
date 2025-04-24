@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CartComponent } from './cart/cart.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ProductsComponent } from './products/products.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -25,6 +26,12 @@ const appRoutes: Routes = [
   {
     path: 'order',
     component: OrdersComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'inventory',
+    component: ProductsComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },

@@ -21,7 +21,9 @@ export class OrdersComponent implements OnInit {
     const user = JSON.parse(localStorage.get('userData'));
 
     this.order.filter((order) => {
-      user.email === order.user;
+      if (user.email === order.user) {
+        return order;
+      }
     });
   }
 }
