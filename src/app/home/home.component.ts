@@ -22,12 +22,13 @@ export class HomeComponent implements OnInit {
   productQuantity: number[] = [];
 
   ngOnInit(): void {
-    if (!localStorage.getItem('products')) {
-      this.productService.getProducts();
-    }
+    this.productService.getProducts();
 
     this.productService.productChanged.subscribe((products) => {
+      console.log('products', products);
       this.products = products;
+
+      this.initializeQuantities();
     });
 
     this.products = this.productService.fetchProducts();

@@ -12,15 +12,17 @@
                     <div>
                         <span class="mr-10">Rs. {{product.price}}</span>
 
-                        <span>
+                        <span class="ml-8">
+                            Quantity:
                             <button class="btn btn-primary">-</button>
-                            <span></span>
-                            <button class="btn btn-primary">+</button>
+                            <span>{{productQuantity[i]}}</span>
+                            <button class="btn btn-primary" (click)="increaseProductQuantity(i)">+</button>
                         </span>
                     </div>
 
-                    <div class="text-center">
-                        <button type="button" class="btn btn-primary mt-2" (click)="onAddToCart(i)">Add To Cart</button>
+                    <div class="text-center mt-2">
+                        <button type="button" class="btn btn-primary mt-2"
+                            (click)="submitProductQuantity(i)">Save</button>
                     </div>
                 </div>
 

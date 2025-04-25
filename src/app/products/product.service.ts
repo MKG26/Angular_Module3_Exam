@@ -22,12 +22,13 @@ export class ProductService {
   }
 
   getProducts() {
-    this.http
+    return this.http
       .get<Product[]>(
         'https://module3-test-193b9-default-rtdb.firebaseio.com/products.json'
       )
       .subscribe((resData) => {
         this.productChanged.next(resData);
+        localStorage.setItem('products', JSON.stringify(resData));
         this.products = resData;
       });
   }
@@ -39,5 +40,15 @@ export class ProductService {
         this.products
       )
       .subscribe();
+  }
+
+  updateProductQuantity(index: number, quantity: number) {
+    this.products[index].quantity = quantity;
+
+    this.productChanged.next(this.products);
+
+    localStorage.setItem('products', JSON.stringify(this.products));
+
+    this.updateProducts();
   }
 }

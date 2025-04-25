@@ -11,9 +11,38 @@ import { ProductService } from './product.service';
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
 
+  productQuantity: number[] = [];
+
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.products = this.productService.fetchProducts();
+
+    this.productService.productChanged.subscribe((productsData) => {
+      this.products = productsData;
+      this.initializeProductQuantity();
+    });
+    this.initializeProductQuantity();
+  }
+
+  initializeProductQuantity() {
+    this.productQuantity = this.products.map((product) => product.quantity);
+  }
+
+  increaseProductQuantity(index: number) {
+    this.productQuantity[index]++;
+  }
+
+  decreaseProductQuantity(index: number) {
+    if (this.productQuantity[index] > 0) {
+      this.productQuantity[index]--;
+    }
+  }
+
+  submitProductQuantity(index: number) {
+    this.productService.updateProductQuantity(
+      index,
+      this.productQuantity[index]
+    );
   }
 }
