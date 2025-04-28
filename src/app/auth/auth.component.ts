@@ -47,7 +47,11 @@ export class AuthComponent implements OnInit {
 
     authObs.subscribe((resData) => {
       console.log(resData);
-      this.router.navigate(['/home']);
+      if (this.inSignUpMode) {
+        this.router.navigate(['/profile']);
+      } else {
+        this.router.navigate(['/home']);
+      }
     });
   }
 }

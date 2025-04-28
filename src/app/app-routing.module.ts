@@ -7,9 +7,10 @@ import { AuthGuard } from './auth/auth.guard';
 import { CartComponent } from './cart/cart.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ProductsComponent } from './products/products.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'auth', component: AuthComponent, pathMatch: 'full' },
   {
     path: 'home',
@@ -32,6 +33,12 @@ const appRoutes: Routes = [
   {
     path: 'inventory',
     component: ProductsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },
