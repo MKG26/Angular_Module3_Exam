@@ -25,7 +25,8 @@
                     <li class="list-group-item">Order Date: {{cartItem.date | date:'medium'}}</li>
                     <li class="list-group-item">Quantity: {{cartItem.quantity}}</li>
                     <li class="list-group-item">Price: Rs. {{cartItem.price}}</li>
-                    <li class="list-group-item" *ngIf="!isAdmin">Status: {{cartItem.status}}</li>
+                    <li class="list-group-item" [class]="[ cartItem.status]" *ngIf="!isAdmin">Status:
+                        {{cartItem.status}}</li>
                     <li class="list-group-item" *ngIf="isAdmin">
                         <div>
                             <button class="btn btn-default" type="button" (click)="toggleDropdown(i)">

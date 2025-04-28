@@ -2,10 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Order } from './order.model';
 import { Subject, tap } from 'rxjs';
+import { ProductService } from '../products/product.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private productService: ProductService
+  ) {
     this.getOrders();
   }
 
@@ -44,10 +48,25 @@ export class OrderService {
       });
   }
 
-  orderToPlace(order: Order) {
+  orderToPlace(order: Order, quantity: number) {
     console.log('Adding new order:', order);
     this.orders.push(order);
+    order.quantity = quantity;
     this.orderChanged.next([...this.orders]);
+
+    const products = this.productService.fetchProducts();
+    const productIndex = products.findIndex(
+      (product) => product.name === order.name
+    );
+
+    if (productIndex !== -1) {
+      const currentQuantity = products[productIndex].quantity;
+
+      const newQuantity = Math.max(0, currentQuantity - quantity);
+
+      this.productService.updateProductQuantity(productIndex, newQuantity);
+    }
+
     this.placeOrder();
   }
 }

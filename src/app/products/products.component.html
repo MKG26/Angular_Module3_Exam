@@ -20,7 +20,7 @@
 
                         <span class="ml-8">
                             Quantity:
-                            <button class="btn btn-primary">-</button>
+                            <button class="btn btn-primary" (click)="decreaseProductQuantity(i)">-</button>
                             <span>{{productQuantity[i]}}</span>
                             <button class="btn btn-primary" (click)="increaseProductQuantity(i)">+</button>
                         </span>

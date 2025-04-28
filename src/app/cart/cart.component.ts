@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
       status: 'Placed',
     };
 
-    this.orderService.orderToPlace(order);
+    this.orderService.orderToPlace(order, cartItem.quantity);
 
     this.cart.splice(index, 1);
 
