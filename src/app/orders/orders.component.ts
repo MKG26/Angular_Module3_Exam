@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { Order } from './order.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-orders',
@@ -8,7 +9,7 @@ import { Order } from './order.model';
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.css',
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   constructor(private orderService: OrderService) {}
 
   order: Order[] = [];
@@ -19,14 +20,18 @@ export class OrdersComponent implements OnInit {
 
   openDropdownIndex: number = -1;
 
+  private orderSubscription: Subscription;
+
+  isLoading = false;
+
   ngOnInit(): void {
-    this.orderService.getOrders();
+    this.orderSubscription = this.orderService.orderChanged.subscribe(
+      (orders) => {
+        this.order = orders;
 
-    this.orderService.orderChanged.subscribe((orders) => {
-      this.order = orders;
-
-      this.filterOrderByCurrentUser();
-    });
+        this.filterOrderByCurrentUser();
+      }
+    );
 
     this.order = this.orderService.orders;
 
@@ -50,6 +55,7 @@ export class OrdersComponent implements OnInit {
       });
 
       console.log('Filtered orders:', this.filteredOrder);
+      this.isLoading = false;
     } else {
       this.filteredOrder = [];
     }
@@ -83,5 +89,9 @@ export class OrdersComponent implements OnInit {
     }
 
     this.openDropdownIndex = -1;
+  }
+
+  ngOnDestroy(): void {
+    this.orderSubscription.unsubscribe();
   }
 }

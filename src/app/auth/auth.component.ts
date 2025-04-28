@@ -14,6 +14,8 @@ export class AuthComponent implements OnInit {
   authenticateForm: FormGroup;
 
   inSignUpMode = false;
+  isLoading = false;
+  error: string = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -31,6 +33,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
     let authObs: Observable<AuthResponseData>;
 
     if (this.inSignUpMode) {
@@ -45,13 +48,22 @@ export class AuthComponent implements OnInit {
       );
     }
 
-    authObs.subscribe((resData) => {
-      console.log(resData);
-      if (this.inSignUpMode) {
-        this.router.navigate(['/profile']);
-      } else {
-        this.router.navigate(['/home']);
+    authObs.subscribe(
+      (resData) => {
+        console.log(resData);
+        if (this.inSignUpMode) {
+          this.isLoading = false;
+          this.router.navigate(['/profile']);
+        } else {
+          this.isLoading = false;
+          this.router.navigate(['/home']);
+        }
+      },
+      (errorMsg) => {
+        console.log(errorMsg);
+        this.isLoading = false;
+        this.error = errorMsg;
       }
-    });
+    );
   }
 }

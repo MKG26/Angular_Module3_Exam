@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../products/product.model';
 import { AuthService } from '../auth/auth.service';
 import { ProductService } from '../products/product.service';
 import { CartService } from '../cart/cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,9 @@ import { CartService } from '../cart/cart.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private productSubscription: Subscription;
+
   constructor(
     private authService: AuthService,
     private productService: ProductService,
@@ -22,16 +25,16 @@ export class HomeComponent implements OnInit {
   productQuantity: number[] = [];
 
   ngOnInit(): void {
-    this.productService.getProducts();
-
-    this.productService.productChanged.subscribe((products) => {
-      console.log('products', products);
-      this.products = products;
-
-      this.initializeQuantities();
-    });
-
     this.products = this.productService.fetchProducts();
+    this.productSubscription = this.productService.productChanged.subscribe(
+      (products) => {
+        console.log('products', products);
+        this.products = products;
+
+        this.initializeQuantities();
+      }
+    );
+
     this.initializeQuantities();
   }
 
@@ -49,5 +52,9 @@ export class HomeComponent implements OnInit {
 
   onAddToCart(index: number) {
     this.cartService.addItems(index, this.productQuantity[index]);
+  }
+
+  ngOnDestroy(): void {
+    this.productSubscription.unsubscribe();
   }
 }

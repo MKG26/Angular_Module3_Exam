@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -8,20 +9,24 @@ import { ProductService } from './product.service';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
 
   productQuantity: number[] = [];
+
+  private productSubscription: Subscription;
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.products = this.productService.fetchProducts();
 
-    this.productService.productChanged.subscribe((productsData) => {
-      this.products = productsData;
-      this.initializeProductQuantity();
-    });
+    this.productSubscription = this.productService.productChanged.subscribe(
+      (productsData) => {
+        this.products = productsData;
+        this.initializeProductQuantity();
+      }
+    );
     this.initializeProductQuantity();
   }
 
@@ -44,5 +49,9 @@ export class ProductsComponent implements OnInit {
       index,
       this.productQuantity[index]
     );
+  }
+
+  ngOnDestroy(): void {
+    this.productSubscription.unsubscribe();
   }
 }

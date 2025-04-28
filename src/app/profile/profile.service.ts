@@ -27,6 +27,32 @@ export class ProfileService {
       .subscribe();
   }
 
+  updateExistingProfile(
+    name: string,
+    email: string,
+    phone: number,
+    address: string,
+    pincode: number
+  ) {
+    const profileIndex = this.profiles.findIndex(
+      (profile) => profile.email === email
+    );
+
+    if (profileIndex !== -1) {
+      this.profiles[profileIndex] = new Profile(
+        name,
+        email,
+        phone,
+        address,
+        pincode
+      );
+
+      this.updateProfile();
+    } else {
+      this.insertProfile(name, email, phone, address, pincode);
+    }
+  }
+
   insertProfile(
     name: string,
     email: string,

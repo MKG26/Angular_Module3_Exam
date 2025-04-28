@@ -15,6 +15,7 @@ export class ProductService {
     }
 
     this.products = JSON.parse(localStorage.getItem('products'));
+    this.getProducts();
   }
 
   fetchProducts() {

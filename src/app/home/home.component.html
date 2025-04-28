@@ -1,4 +1,11 @@
 <div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="text-center mb-4">Our Products</h2>
+            <hr>
+        </div>
+    </div>
     <div class="row">
         <div *ngFor="let product of products; let i=index" class="col-sm-6 col-md-4 ">
             <div class="panel panel-default">
@@ -13,14 +20,15 @@
                         <span class="mr-10">Rs. {{product.price}}</span>
 
                         <span class="ml-10">
-                            <button class="btn btn-primary" (click)="decreaseQuantity(i)">-</button>
-                            <span>{{productQuantity[i]}}</span>
-                            <button class="btn btn-primary" (click)="increaseQuantity(i)">+</button>
+                            <button class="btn btn-danger" (click)="decreaseQuantity(i)">-</button>
+                            <span class="ml-1 mr-1">{{productQuantity[i]}}</span>
+                            <button class="btn btn-success" (click)="increaseQuantity(i)">+</button>
                         </span>
                     </div>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary mt-2" (click)="onAddToCart(i)">Add To Cart</button>
+                        <button type="button" class="btn btn-primary mt-4" (click)="onAddToCart(i)"
+                            [disabled]="productQuantity[i] === 0">Add To Cart</button>
                     </div>
                 </div>
 

@@ -5,7 +5,9 @@ import { Subject, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getOrders();
+  }
 
   orders: Order[] = [];
 

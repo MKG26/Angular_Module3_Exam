@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { User } from './user.modal';
 import { Router } from '@angular/router';
 
@@ -31,6 +31,7 @@ export class AuthService {
         }
       )
       .pipe(
+        catchError(this.handleError),
         tap((resData) => {
           this.handleAuthentication(
             resData.email,
@@ -53,6 +54,7 @@ export class AuthService {
         }
       )
       .pipe(
+        catchError(this.handleError),
         tap((resData) => {
           this.handleAuthentication(
             resData.email,
@@ -120,5 +122,27 @@ export class AuthService {
     this.user.next(user);
 
     localStorage.setItem('userData', JSON.stringify(user));
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    console.log(errorRes);
+
+    let errorMessage = 'Some Error occured';
+
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(errorMessage);
+    }
+
+    switch (errorRes.error.error.message) {
+      case 'EMAIL_EXISTS':
+        errorMessage = 'Email already exists';
+        break;
+
+      case 'INVALID_LOGIN_CREDENTIALS':
+        errorMessage = 'Invalid login credentials';
+        break;
+    }
+
+    return throwError(errorMessage);
   }
 }

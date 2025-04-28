@@ -13,6 +13,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrdersComponent } from './orders/orders.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ProfileComponent } from './profile/profile.component';
+import { LoadingComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProfileComponent } from './profile/profile.component';
     CartComponent,
     OrdersComponent,
     ProfileComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
